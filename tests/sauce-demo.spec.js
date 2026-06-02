@@ -78,9 +78,9 @@ test('Social media icon redirection validation', async ({ page }) => {
     await loginPage.login();
 
     for (const link of socialMediaLinks) {
-        const href = await inventoryPage.getSocialLinkHrefBySelector(link.selector);
-        log(`Verifying ${link.platform} footer link destination: ${href}`);
-        expect(href).toContain(link.expectedHref);
+        const navigatedUrl = await inventoryPage.clickSocialLinkAndGetUrl(link.selector);
+        log(`Clicked ${link.platform} and navigated to: ${navigatedUrl}`);
+        expect(navigatedUrl).toContain(link.expectedHref);
     }
 });
 

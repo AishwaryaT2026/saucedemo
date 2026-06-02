@@ -43,12 +43,27 @@ export class InventoryPage extends BasePage {
         return await icon.getAttribute('href');
     }
 
-    async getSocialLinkHrefBySelector(selector) {
+    async clickSocialLinkAndGetUrl(selector) {
         const icon = this.page.locator(selector);
         await expect(icon).toBeVisible({ timeout: 5000 });
-        const href = await icon.getAttribute('href');
-        await expect(href, `Expected social icon ${selector} to have href`).toBeTruthy();
-        return href;
+        const target = await icon.getAttribute('target');
+
+        const popupPromise = target === '_blank'
+            ? this.page.context().waitForEvent('page')
+            : Promise.resolve(null);
+
+        await icon.click();
+
+        if (target === '_blank') {
+            const newPage = await popupPromise;
+            await newPage.waitForLoadState('domcontentloaded');
+            const url = newPage.url();
+            await newPage.close();
+            return url;
+        }
+
+        await this.page.waitForLoadState('domcontentloaded');
+        return this.page.url();
     }
 
     addProduct(productName) {

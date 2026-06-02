@@ -1,17 +1,17 @@
 export const socialMediaLinks = [
     {
         platform: 'Twitter',
-        selector: '.social_twitter',
+        selector: '.social_twitter a',
         expectedHref: 'https://x.com/saucelabs',
     },
     {
         platform: 'Facebook',
-        selector: '.social_facebook',
+        selector: '.social_facebook a',
         expectedHref: 'https://www.facebook.com/saucelabs',
     },
     {
         platform: 'LinkedIn',
-        selector: '.social_linkedin',
+        selector: '.social_linkedin a',
         expectedHref: 'https://www.linkedin.com/company/sauce-labs/',
     },
 ];
